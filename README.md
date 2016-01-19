@@ -22,7 +22,7 @@ Installation of this module uses composer. For composer documentation, please re
 php composer.phar require fagundes/zff-html2pdf:0.*
 ```
 
-Then add `Zff\\Html2Pdf` to your `config/application.config.php`.
+Then add `Zff\Html2Pdf` to your `config/application.config.php`.
 
 Installation without composer is not officially supported and requires you to manually install all dependencies that are listed in composer.json
 
@@ -44,7 +44,7 @@ Controller Example: `AnyController.php`
 ```php
 <?php
 
-use Zff\Html2Pdf\Html2PdfModel;
+use Zff\Html2Pdf\View\Model\Html2PdfModel;
 
 class AnyController
 {
