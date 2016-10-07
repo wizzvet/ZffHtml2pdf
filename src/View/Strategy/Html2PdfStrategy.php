@@ -9,19 +9,23 @@ namespace Zff\Html2Pdf\View\Strategy;
 use Zff\Html2Pdf\View\Renderer\Html2PdfRenderer;
 use Zff\Html2Pdf\View\Model\Html2PdfModel;
 use Zend\EventManager\EventManagerInterface;
-use Zend\EventManager\ListenerAggregateInterface;
+use Zend\EventManager\AbstractListenerAggregate;
 use Zend\View\ViewEvent;
 
 /**
  * Class that selects Html2PdfRenderer wbenever receive a Html2PdfModel from Controller.
  */
-class Html2PdfStrategy implements ListenerAggregateInterface
+class Html2PdfStrategy extends AbstractListenerAggregate
 {
+    /**
+     * @var Html2PdfRenderer
+     */
+    protected $renderer;
 
     /**
      * Constructor
      *
-     * @param  Html2PdfRenderer $renderer
+     * @param Html2PdfRenderer $renderer
      */
     public function __construct(Html2PdfRenderer $renderer)
     {
@@ -32,7 +36,7 @@ class Html2PdfStrategy implements ListenerAggregateInterface
      * Attach the aggregate to the specified event manager
      *
      * @param  EventManagerInterface $events
-     * @param  int $priority
+     * @param  int                   $priority
      * @return void
      */
     public function attach(EventManagerInterface $events, $priority = 1)
@@ -67,7 +71,7 @@ class Html2PdfStrategy implements ListenerAggregateInterface
      * Populates the content of the response object from the view rendering
      * results.
      *
-     * @param ViewEvent $e
+     * @param  ViewEvent $e
      * @return void
      */
     public function injectResponse(ViewEvent $e)
@@ -75,15 +79,6 @@ class Html2PdfStrategy implements ListenerAggregateInterface
         $renderer = $e->getRenderer();
         if ($renderer !== $this->renderer) {
             return;
-        }
-    }
-
-    public function detach(EventManagerInterface $events)
-    {
-        foreach ($this->listeners as $index => $listener) {
-            if ($events->detach($listener)) {
-                unset($this->listeners[$index]);
-            }
         }
     }
 }
